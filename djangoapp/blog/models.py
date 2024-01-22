@@ -3,6 +3,7 @@ from utils.randomic_ import new_slugified
 from django.contrib.auth.models import User
 from utils.image import resize_image
 from django_summernote.models import AbstractAttachment
+from django.urls import reverse
 
 class Tag(models.Model):
     class Meta:
@@ -66,10 +67,17 @@ class Page(models.Model):
     def __str__(self) -> str:
         return self.title
     
+class PostManager(models.Manager):
+    
+    def get_published(self):
+        return self.filter(is_published=True).order_by('-pk')
+
 class Post(models.Model):
     class Meta:
         verbose_name = "Post"
         verbose_name_plural = "Posts"
+
+    objects = PostManager()
 
     title = models.CharField(max_length=65,)
     slug = models.SlugField(
@@ -107,6 +115,12 @@ class Post(models.Model):
     def __str__(self) -> str:
         return self.title
     
+    def get_absolute_url(self):
+        if not self.is_published:
+            return reverse('blog:index')
+        return reverse('blog:post',args=(self.slug,))
+    
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = new_slugified(self.title)
