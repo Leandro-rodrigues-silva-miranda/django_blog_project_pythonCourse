@@ -54,7 +54,7 @@ class PostAdmin(SummernoteModelAdmin):
     prepopulated_fields = {
         "slug":('title',),
     }
-    autocomplete_fields = 'tag','category',
+    autocomplete_fields = 'tags','category',
     summernote_fields = 'content',
 
     def link(self,obj):

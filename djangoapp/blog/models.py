@@ -110,7 +110,7 @@ class Post(models.Model):
         related_name='page_updated_by'
     )
     category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,blank=True,default=None)
-    tag = models.ManyToManyField(Tag,blank=True,default='')
+    tags = models.ManyToManyField(Tag,blank=True,default='')
 
     def __str__(self) -> str:
         return self.title
