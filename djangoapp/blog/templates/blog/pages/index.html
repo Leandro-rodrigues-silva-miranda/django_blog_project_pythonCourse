@@ -13,7 +13,7 @@
         {% else %}
           <div class="not-found center">
             <h1>Nada encontrado!</h1>
-            <p>Não há posts nessa página, volte para a <a href="{% url "blog:index" %}">home</a></p>
+            <p>Não há posts contendo "{{ search_value }}", volte para a <a href="{% url "blog:index" %}">home</a></p>
           </div>
         {% endif %}
 
